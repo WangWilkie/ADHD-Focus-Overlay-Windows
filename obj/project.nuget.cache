@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "cHcmcMm1IwI=",
+  "success": true,
+  "projectFilePath": "F:\\ADHD\\ADHDFocusOverlay.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\34924\\.nuget\\packages\\microsoft.net.illink.tasks\\8.0.25\\microsoft.net.illink.tasks.8.0.25.nupkg.sha512",
+    "C:\\Users\\34924\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.19041.56\\microsoft.windows.sdk.net.ref.10.0.19041.56.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,11 +1,23 @@
 @echo off
 setlocal
 
-set CSC=C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe
+where dotnet >nul 2>nul
+if errorlevel 1 (
+  echo dotnet is not installed.
+  exit /b 1
+)
+
+for /f "delims=" %%i in ('dotnet --list-sdks') do set HAS_SDK=1
+if not defined HAS_SDK (
+  echo .NET 8 SDK or newer is required to build this project.
+  echo Install it from https://dotnet.microsoft.com/download/dotnet/8.0
+  exit /b 1
+)
+
 set OUTDIR=%~dp0dist
 if not exist "%OUTDIR%" mkdir "%OUTDIR%"
 
-"%CSC%" /nologo /target:winexe /out:"%OUTDIR%\ADHDFocusOverlay.exe" /reference:System.dll /reference:System.Drawing.dll /reference:System.Windows.Forms.dll /reference:System.Core.dll /reference:Microsoft.CSharp.dll Program.cs AppState.cs Geometry.cs DragMode.cs NativeMethods.cs OverlayForm.cs BorderForm.cs SettingsForm.cs OverlayAppContext.cs
+dotnet publish "%~dp0ADHDFocusOverlay.csproj" -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -o "%OUTDIR%"
 if errorlevel 1 exit /b %errorlevel%
 
 echo Built: %OUTDIR%\ADHDFocusOverlay.exe
