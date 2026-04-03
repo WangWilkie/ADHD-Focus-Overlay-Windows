@@ -8,8 +8,16 @@ internal static class NativeMethods
     public const int GwlExStyle = -20;
     public const int HtTransparent = -1;
     public const int HtClient = 1;
+    public const int HtCaption = 2;
+    public const int WmEnterSizeMove = 0x0231;
+    public const int WmExitSizeMove = 0x0232;
+    public const int WmMouseMove = 0x0200;
+    public const int WmLButtonDown = 0x0201;
+    public const int WmLButtonUp = 0x0202;
     public const int WmNchitTest = 0x0084;
     public const int WmHotKey = 0x0312;
+    public const int VkShift = 0x10;
+    public const int VkMenu = 0x12;
     public const int WsExTransparent = 0x20;
     public const int WsExToolWindow = 0x80;
     public const int WsExNoActivate = 0x08000000;
@@ -31,6 +39,25 @@ internal static class NativeMethods
 
     [DllImport("user32.dll")]
     public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+
+    [DllImport("user32.dll")]
+    public static extern IntPtr SetCapture(IntPtr hWnd);
+
+    [DllImport("user32.dll")]
+    public static extern bool ReleaseCapture();
+
+    [DllImport("user32.dll")]
+    public static extern bool GetCursorPos(out POINT lpPoint);
+
+    [DllImport("user32.dll")]
+    public static extern short GetAsyncKeyState(int vKey);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct POINT
+    {
+        public int X;
+        public int Y;
+    }
 
     [DllImport("user32.dll", SetLastError = true)]
     public static extern bool SetWindowPos(

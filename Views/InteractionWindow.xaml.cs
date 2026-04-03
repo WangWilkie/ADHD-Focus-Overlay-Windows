@@ -1,7 +1,7 @@
 using System;
-using System.Windows.Input;
 using System.Windows;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Interop;
 using AdhdFocusOverlay.Controllers;
 using AdhdFocusOverlay.Infrastructure;
@@ -105,6 +105,11 @@ public partial class InteractionWindow : Window
         SynchronizeBounds();
     }
 
+    private void ResizeThumb_OnDragStarted(object sender, DragStartedEventArgs e)
+    {
+        SetDragActive(true);
+    }
+
     private void ResizeThumb_OnDragDelta(object sender, DragDeltaEventArgs e)
     {
         if (!interactionEnabled ||
@@ -117,11 +122,6 @@ public partial class InteractionWindow : Window
 
         var delta = LogicalDeltaToDevice(e.HorizontalChange, e.VerticalChange);
         focusRegionController.Resize(handle, delta.dx, delta.dy);
-    }
-
-    private void ResizeThumb_OnDragStarted(object sender, DragStartedEventArgs e)
-    {
-        SetDragActive(true);
     }
 
     private void ResizeThumb_OnDragCompleted(object sender, DragCompletedEventArgs e)
@@ -166,13 +166,11 @@ public partial class InteractionWindow : Window
         var screenY = unchecked((short)((lParam.ToInt32() >> 16) & 0xFFFF));
         var localX = screenX - deviceX;
         var localY = screenY - deviceY;
-        var width = deviceWidth;
-        var height = deviceHeight;
         var insideCenter =
             localX > HandleThickness &&
-            localX < width - HandleThickness &&
+            localX < deviceWidth - HandleThickness &&
             localY > HandleThickness &&
-            localY < height - HandleThickness;
+            localY < deviceHeight - HandleThickness;
 
         handled = true;
         if (insideCenter)
@@ -205,6 +203,7 @@ public partial class InteractionWindow : Window
 
         return hwndSource.CompositionTarget.TransformFromDevice.Transform(new WpfPoint(x, y));
     }
+
     private void EnsureTopmost()
     {
         if (hwndSource is null)
@@ -227,8 +226,9 @@ public partial class InteractionWindow : Window
 
     private static bool IsMoveModifierActive()
     {
-        return Keyboard.Modifiers.HasFlag(ModifierKeys.Alt) &&
-               Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
+        var altPressed = (NativeMethods.GetAsyncKeyState(NativeMethods.VkMenu) & 0x8000) != 0;
+        var shiftPressed = (NativeMethods.GetAsyncKeyState(NativeMethods.VkShift) & 0x8000) != 0;
+        return altPressed && shiftPressed;
     }
 
     private void SetDragActive(bool active)

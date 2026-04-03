@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ADHDFocusOverlay")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3150a31bd5245f9a38c9701b528c513d89e53c73")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+24b80ebb7b38d07fe7bff68936e9bc27fa31d02e")]
 [assembly: System.Reflection.AssemblyProductAttribute("ADHDFocusOverlay")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ADHDFocusOverlay")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

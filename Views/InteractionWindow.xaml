@@ -23,7 +23,7 @@
     </Style>
   </Window.Resources>
 
-  <Grid Background="{x:Null}" SnapsToDevicePixels="True">
+  <Grid Background="Transparent" SnapsToDevicePixels="True">
     <Grid.RowDefinitions>
       <RowDefinition Height="18" />
       <RowDefinition Height="*" />
